@@ -326,7 +326,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<ExpandMoreIcon />
 						</Box>
 						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
-							<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : t('Property type')} </span>
+							<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : t('Booking type')} </span>
 							<ExpandMoreIcon />
 						</Box>
 						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
@@ -339,7 +339,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					<Stack className={'search-box-other'}>
 						<Box className={'advanced-filter'} onClick={() => advancedFilterHandler(true)}>
 							<img src="/img/icons/tune.svg" alt="" />
-							<span>{t('Advanced')}</span>
 						</Box>
 						<Box className={'search-btn'} onClick={pushSearchHandler}>
 							<img src="/img/icons/search_white.svg" alt="" />
@@ -351,7 +350,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						{propertyLocation.map((location: string) => {
 							return (
 								<div onClick={() => propertyLocationSelectHandler(location)} key={location}>
-									<img src={`img/banner/cities/${location}.webp`} alt="" />
 									<span>{location}</span>
 								</div>
 							);

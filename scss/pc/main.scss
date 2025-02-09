@@ -196,7 +196,6 @@ body::-webkit-scrollbar {
 			}
 		}
 	}
-
 	.header-main {
 		position: relative;
 		width: 100%;
@@ -208,28 +207,30 @@ body::-webkit-scrollbar {
 
 		.container {
 			position: relative;
-			margin-top: 20px;
+			margin-top: 680px;
 			flex-direction: column;
-			align-items: center;
+			align-items: left;
+
 			.search-box {
 				position: relative;
-				margin-top: 56px;
+				margin-top: 10px;
 				padding: 16px 29px;
-				width: 1094px;
-				height: 96px;
+				width: 670px;
+				height: 95px;
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
-				background: rgba(255, 255, 255, 0.28);
+				background: #a2cfd0;
+
 				border-radius: 12px;
 				.select-box {
-					width: 712px;
+					width: 400px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
 					.box {
 						padding: 24px 22px;
-						width: 213px;
+						width: 110px;
 						height: 56px;
 						display: flex;
 						flex-direction: row;
@@ -241,25 +242,32 @@ body::-webkit-scrollbar {
 						cursor: pointer;
 						&.on {
 							background: #ffffff;
-							border: 1px solid #000;
+							border: 1px solid #ffffff;
 							color: #181a20;
 						}
 						span {
+							margin-right: 5px;
 							color: #181a20;
 							font-family: $font;
-							font-size: 14px;
+							font-size: 12px;
 							font-style: normal;
 							font-weight: 400;
-							line-height: 26px;
 						}
 						svg {
+							transition: transform 0.3s ease-in-out; /* 움직이는 속도 설정 */
+
+							&:hover {
+								transform: scale(1.1); /* 마우스를 올리면 요소가 10% 커지게 */
+							}
 						}
 					}
 				}
 				.search-box-other {
+					width: 120px;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
+					justify-content: space-between;
 					.advanced-filter {
 						display: flex;
 						flex-direction: row;
@@ -269,6 +277,11 @@ body::-webkit-scrollbar {
 							width: 25px;
 							height: 22px;
 							cursor: pointer;
+							transition: transform 0.3s ease-in-out; /* 움직이는 속도 설정 */
+
+							&:hover {
+								transform: scale(1.1); /* 마우스를 올리면 요소가 10% 커지게 */
+							}
 						}
 						span {
 							color: #fff;
@@ -282,14 +295,19 @@ body::-webkit-scrollbar {
 					}
 					.search-btn {
 						margin-left: 12px;
-						width: 62px;
-						height: 62px;
+						width: 50px;
+						height: 50px;
 						display: flex;
 						align-items: center;
 						justify-content: center;
 						border-radius: 55px;
 						background: #f17742;
 						cursor: pointer;
+						transition: transform 0.3s ease-in-out; /* 움직이는 속도 설정 */
+
+						&:hover {
+							transform: scale(1.1); /* 마우스를 올리면 요소가 10% 커지게 */
+						}
 						svg {
 							width: 20px;
 							height: 20px;
@@ -300,11 +318,10 @@ body::-webkit-scrollbar {
 				.filter-location {
 					position: absolute;
 					padding: 40px 60px;
-					width: 1094px;
+					width: 500px;
 					min-height: 120px;
 					height: auto;
 					top: 96px;
-					right: 0px;
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;
@@ -315,32 +332,37 @@ body::-webkit-scrollbar {
 					box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 					box-sizing: border-box;
 					z-index: 2;
+
+					opacity: 0; /* 처음에는 투명 */
+					transform: translateY(-20px); /* 위에서 아래로 내려오도록 */
+					transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* 부드러운 애니메이션 */
+
 					&.on {
 						visibility: visible;
-						transition: 0.2s ease-out;
+						opacity: 1; /* 나타남 */
+						transform: translateY(0); /* 제자리로 이동 */
 						background: #fffdfd;
 					}
 					div {
-						width: 295px;
+						width: 95px;
 						display: flex;
 						flex-direction: row;
 						align-items: center;
-						img {
-							width: 122px;
-							height: 85px;
-							border-radius: 15px;
-							cursor: pointer;
-						}
 						span {
 							margin-left: 22px;
 							color: #181a20;
 							font-family: $font;
-							font-size: 20px;
+							font-size: 12px;
 							font-style: normal;
 							font-weight: 400;
 							line-height: 26px;
 							cursor: pointer;
 							text-transform: capitalize;
+							transition: transform 0.1s ease-in-out; /* 움직이는 속도 설정 */
+
+							&:hover {
+								transform: scale(1.1); /* 마우스를 올리면 요소가 10% 커지게 */
+							}
 						}
 						label {
 							line-height: 13px;
@@ -350,11 +372,10 @@ body::-webkit-scrollbar {
 				.filter-type {
 					position: absolute;
 					padding: 50px;
-					width: 1094px;
+					width: 600px;
 					min-height: 120px;
 					height: auto;
 					top: 96px;
-					right: 0px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
@@ -364,15 +385,21 @@ body::-webkit-scrollbar {
 					box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 					box-sizing: border-box;
 					z-index: 1;
+
+					opacity: 0; /* 처음에는 투명 */
+					transform: translateY(-20px); /* 위에서 아래로 내려오도록 */
+					transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* 부드러운 애니메이션 */
+
 					&.on {
 						visibility: visible;
-						transition: 0.2s ease-out;
+						opacity: 1; /* 나타남 */
+						transform: translateY(0); /* 제자리로 이동 */
 						background: #fffdfd;
 					}
 					div {
 						position: relative;
-						width: 272px;
-						height: 168px;
+						width: 120px;
+						height: 120px;
 						border-radius: 15px;
 						cursor: pointer;
 						background-size: cover;
@@ -383,9 +410,9 @@ body::-webkit-scrollbar {
 							padding: 1px 5px 5px 5px;
 							border-radius: 2px 2px 0px 0px;
 							font-family: $font;
-							font-size: 20px;
+							font-size: 12px;
 							font-style: normal;
-							font-weight: 700;
+							font-weight: 400;
 							line-height: 26px;
 							background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 100%);
 							// -webkit-background-clip: text;
@@ -397,11 +424,10 @@ body::-webkit-scrollbar {
 				.filter-rooms {
 					position: absolute;
 					padding: 10px 92px;
-					width: 1094px;
+					width: 600px;
 					min-height: 120px;
 					height: auto;
 					top: 96px;
-					right: 0px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
@@ -412,19 +438,26 @@ body::-webkit-scrollbar {
 					box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 					box-sizing: border-box;
 					z-index: 1;
+
+
+					opacity: 0; /* 처음에는 투명 */
+					transform: translateY(-20px); /* 위에서 아래로 내려오도록 */
+					transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* 부드러운 애니메이션 */
+
 					&.on {
 						visibility: visible;
-						transition: 0.2s ease-out;
+						opacity: 1; /* 나타남 */
+						transform: translateY(0); /* 제자리로 이동 */
 						background: #fffdfd;
 					}
 					span {
 						display: flex;
 						align-items: center;
-						padding: 10px 30px;
+						padding: 5px 10px;
 						border: 1px solid #fffdfd;
 						color: #181a20;
 						font-family: $font;
-						font-size: 20px;
+						font-size: 12px;
 						font-style: normal;
 						font-weight: 400;
 						line-height: 26px;
@@ -752,16 +785,17 @@ body::-webkit-scrollbar {
 						width: 667px;
 						height: 150px;
 						flex-direction: column;
-						background: #558687;
+						background: #8fbebf;
+
 						align-items: center;
 						border-radius: 50px 10px 10px 10px;
 
 						strong {
-							color: #333;
+							color: #ffffff;
 							font-family: $font;
-							font-size: 15px;
+							font-size: 18px;
 							font-style: normal;
-							font-weight: 600;
+							font-weight: 400;
 							line-height: normal;
 							text-transform: capitalize;
 							margin-top: 15px;
