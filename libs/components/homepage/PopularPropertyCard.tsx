@@ -96,15 +96,6 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 						pushDetailHandler(property._id);
 					}}
 				>
-					{property && property?.propertyRank >= topPropertyRank ? (
-						<div className={'status'}>
-							<img src="/img/icons/electricity.svg" alt="" />
-							<span>top</span>
-						</div>
-					) : (
-						''
-					)}
-
 					<div className={'price'}>${property.propertyPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>

@@ -75,7 +75,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Popular properties</span>
+							<span>Popular Bookings</span>
 							<p>Popularity is based on views</p>
 						</Box>
 						<Box component={'div'} className={'right'}>

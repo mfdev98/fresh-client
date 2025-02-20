@@ -22,66 +22,8 @@ const withLayoutBasic = (Component: any) => {
 		const [authHeader, setAuthHeader] = useState<boolean>(false);
 		const user = useReactiveVar(userVar);
 
-		const memoizedValues = useMemo(() => {
-			let title = '',
-				desc = '',
-				bgImage = '';
-
-			switch (router.pathname) {
-				case '/property':
-					title = 'Property Search';
-					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/properties.png';
-					break;
-				case '/agent':
-					title = 'Agents';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/agents.webp';
-					break;
-				case '/agent/detail':
-					title = 'Agent Page';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
-					break;
-				case '/mypage':
-					title = 'my page';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
-					break;
-				case '/community':
-					title = 'Community';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
-					break;
-				case '/community/detail':
-					title = 'Community Detail';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
-					break;
-				case '/cs':
-					title = 'CS';
-					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/header2.svg';
-					break;
-				case '/account/join':
-					title = 'Login/Signup';
-					desc = 'Authentication Process';
-					bgImage = '/img/banner/header2.svg';
-					setAuthHeader(true);
-					break;
-				case '/member':
-					title = 'Member Page';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
-					break;
-				default:
-					break;
-			}
-
-			return { title, desc, bgImage };
-		}, [router.pathname]);
-
 		/** LIFECYCLES **/
+
 		useEffect(() => {
 			const jwt = getJwtToken();
 			if (jwt) updateUserInfo(jwt);
@@ -93,7 +35,7 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
+						<title>FreshTour</title>
 						<meta name={'title'} content={`Nestar`} />
 					</Head>
 					<Stack id="mobile-wrap">
@@ -115,34 +57,17 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
+						<title>FreshTour</title>
 						<meta name={'title'} content={`Nestar`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
 							<Top />
 						</Stack>
-
-						<Stack
-							className={`header-basic ${authHeader && 'auth'}`}
-							style={{
-								backgroundImage: `url(${memoizedValues.bgImage})`,
-								backgroundSize: 'cover',
-								boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
-							}}
-						>
-							<Stack className={'container'}>
-								<strong>{t(memoizedValues.title)}</strong>
-								<span>{t(memoizedValues.desc)}</span>
-							</Stack>
-						</Stack>
-
 						<Stack id={'main'}>
 							<Component {...props} />
 						</Stack>
-
 						{<Chat />}
-
 						<Stack id={'footer'}>
 							<Footer />
 						</Stack>

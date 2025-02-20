@@ -1,6 +1,9 @@
 /** IMPORTS **/
 @import 'variables.scss';
 @import 'reset.scss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 a {
 	white-space: nowrap;

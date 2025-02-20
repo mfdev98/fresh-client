@@ -13,6 +13,7 @@ import Chat from '../Chat';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { Button } from '../../../@/components/ui/button';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
@@ -60,20 +61,16 @@ const withLayoutMain = (Component: any) => {
 						<Stack id={'top'}>
 							<Top />
 						</Stack>
-
 						<Stack className={'header-main'}>
 							{/* <FiberContainer /> */}
 							<Stack className={'container'}>
 								<HeaderFilter />
 							</Stack>
 						</Stack>
-
 						<Stack id={'main'}>
 							<Component {...props} />
 						</Stack>
-
 						{<Chat />}
-
 						<Stack id={'footer'}>
 							<Footer />
 						</Stack>

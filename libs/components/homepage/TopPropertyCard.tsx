@@ -100,7 +100,11 @@ const TopPropertyCard = (props: TopPropertyCardProps) => {
 						pushDetailHandler(property._id);
 					}}
 				>
-					<div>${property?.propertyPrice}</div>
+					<div className={'status'}>
+						<img src="/img/icons/electricity.svg" alt="" />
+						<span>top</span>
+					</div>
+					<div>${property?.propertyPrice} </div>
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong

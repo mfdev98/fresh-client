@@ -72,11 +72,11 @@ const TopAgents = (props: TopAgentsProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Top Agents</span>
+							<span>Meet Our Top Agents</span>
 							<p>Our Top Agents always ready to serve you</p>
 						</Box>
 						<Box component={'div'} className={'right'}>
-							<div className={'more-box'}>
+							<div className={'more-box'} onClick={() => router.push('/agent')}>
 								<span>See All Agents</span>
 								<img src="/img/icons/rightup.svg" alt="" />
 							</div>
@@ -84,7 +84,7 @@ const TopAgents = (props: TopAgentsProps) => {
 					</Stack>
 					<Stack className={'wrapper'}>
 						<Box component={'div'} className={'switch-btn swiper-agents-prev'}>
-							<ArrowBackIosNewIcon />
+							<ArrowBackIosNewIcon sx={{ color: 'white' }} />
 						</Box>
 						<Box component={'div'} className={'card-wrapper'}>
 							<Swiper
@@ -100,14 +100,24 @@ const TopAgents = (props: TopAgentsProps) => {
 								{topAgents.map((agent: Member) => {
 									return (
 										<SwiperSlide className={'top-agents-slide'} key={agent?._id}>
-											<TopAgentCard agent={agent} key={agent?.memberNick} />
+											<div
+												key={agent?._id}
+												onClick={() =>
+													router.push({
+														pathname: '/agent/detail',
+														query: { agentId: agent?._id },
+													})
+												}
+											>
+												<TopAgentCard agent={agent} key={agent?.memberNick} />
+											</div>
 										</SwiperSlide>
 									);
 								})}
 							</Swiper>
 						</Box>
 						<Box component={'div'} className={'switch-btn swiper-agents-next'}>
-							<ArrowBackIosNewIcon />
+							<ArrowBackIosNewIcon sx={{ color: 'white', transform: "rotate(180deg)" }} />
 						</Box>
 					</Stack>
 				</Stack>

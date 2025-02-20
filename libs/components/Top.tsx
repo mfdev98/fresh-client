@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -8,7 +8,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
@@ -211,10 +210,12 @@ const Top = () => {
 										onClose={() => {
 											setLogoutAnchor(null);
 										}}
-										sx={{ mt: '5px' }}
+										sx={{
+											mt: '10px',
+										}}
 									>
-										<MenuItem onClick={() => logOut()}>
-											<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
+										<MenuItem onClick={() => logOut()} >
+											<Logout fontSize="small" style={{ color: 'red', marginRight: '15px' }} />
 											Logout
 										</MenuItem>
 									</Menu>
@@ -222,9 +223,7 @@ const Top = () => {
 							) : (
 								<Link href={'/account/join'}>
 									<div className={'join-box'}>
-										<span>
-											{t('Login')} / {t('Register')}
-										</span>
+										<span>{t('Login')}</span>
 									</div>
 								</Link>
 							)}
