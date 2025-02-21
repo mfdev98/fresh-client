@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 interface EventData {
 	eventTitle: string;
@@ -8,6 +9,7 @@ interface EventData {
 	description: string;
 	imageSrc: string;
 }
+
 const eventsData: EventData[] = [
 	{
 		eventTitle: 'Paradise City Theme Park',
@@ -37,58 +39,187 @@ const eventsData: EventData[] = [
 	},
 ];
 
-const EventCard = ({ event }: { event: EventData }) => {
+const EventCarousel: React.FC = () => {
 	const device = useDeviceDetect();
+	const [activeIndex, setActiveIndex] = useState(0);
+
+	const handlePrev = () => {
+		setActiveIndex((prev) => (prev === 0 ? eventsData.length - 1 : prev - 1));
+	};
+
+	const handleNext = () => {
+		setActiveIndex((prev) => (prev === eventsData.length - 1 ? 0 : prev + 1));
+	};
 
 	if (device === 'mobile') {
-		return <div>EVENT CARD</div>;
-	} else {
-		return (
-			<Stack
-				className="event-card"
-				style={{
-					backgroundImage: `url(${event?.imageSrc})`,
-					backgroundSize: 'cover',
-					backgroundPosition: 'center',
-					backgroundRepeat: 'no-repeat',
+		return <div>EVENT CAROUSEL MOBILE</div>;
+	}
+
+	const activeEvent = eventsData[activeIndex];
+
+	return (
+		<Stack sx={{ maxWidth: 'lg', mx: 'auto', p: { xs: 4, sm: 6, lg: 12 }, bgcolor: 'white' }}>
+			{/* Carousel Body */}
+			<Box
+				sx={{
+					position: 'relative',
+					borderRadius: 2,
+					display: { md: 'flex' },
+					alignItems: 'center',
+					bgcolor: 'grey.100',
+					boxShadow: 6,
+					minHeight: '19rem',
 				}}
 			>
-				<Box component={'div'} className={'info'}>
-					<strong>{event?.city}</strong>
-					<span>{event?.eventTitle}</span>
+				{/* Image Section */}
+				<Box
+					sx={{
+						position: 'relative',
+						width: { xs: '100%', md: '40%' },
+						minHeight: '19rem',
+						overflow: 'hidden',
+						borderRadius: { xs: '8px 8px 0 0', md: '8px 0 0 8px' },
+					}}
+				>
+					<Box
+						component="img"
+						src={activeEvent.imageSrc}
+						alt={activeEvent.eventTitle}
+						sx={{
+							position: 'absolute',
+							inset: 0,
+							width: '100%',
+							height: '100%',
+							objectFit: 'cover',
+							objectPosition: 'center',
+						}}
+					/>
+					<Box sx={{ position: 'absolute', inset: 0, bgcolor: 'indigo.900', opacity: 0.75 }} />
+					<Box
+						sx={{
+							position: 'absolute',
+							inset: 0,
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							color: 'white',
+						}}
+					>
+						<strong>{activeEvent.city}</strong>
+					</Box>
 				</Box>
-				<Box component={'div'} className={'more'}>
-					<span>{event?.description}</span>
-				</Box>
-			</Stack>
-		);
-	}
-};
 
-const Events = () => {
-	const device = useDeviceDetect();
-
-	if (device === 'mobile') {
-		return <div>EVENT CARD</div>;
-	} else {
-		return (
-			<Stack className={'events'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span className={'white'}>Events</span>
-							<p className={'white'}>Events waiting your attention!</p>
+				{/* Content Section */}
+				<Box
+					sx={{
+						width: { xs: '100%', md: '60%' },
+						bgcolor: 'grey.100',
+						borderRadius: 2,
+						p: { xs: 4, md: '12px 24px 12px 16px' },
+					}}
+				>
+					<Box component="p" sx={{ color: 'grey.600' }}>
+						<Box component="span" sx={{ color: 'grey.900', fontWeight: 'bold' }}>
+							{activeEvent.eventTitle}
+						</Box>{' '}
+						- {activeEvent.description}
+					</Box>
+					<Box
+						component="a"
+						href="#"
+						sx={{
+							display: 'flex',
+							alignItems: 'baseline',
+							mt: 3,
+							color: 'indigo.600',
+							'&:hover': { color: 'indigo.900' },
+						}}
+					>
+						<span>Learn more about this event</span>
+						<Box component="span" sx={{ ml: 1, fontSize: 'xs' }}>
+							➜
 						</Box>
-					</Stack>
-					<Stack className={'card-wrapper'}>
-						{eventsData.map((event: EventData) => {
-							return <EventCard event={event} key={event?.eventTitle} />;
-						})}
-					</Stack>
-				</Stack>
+					</Box>
+				</Box>
+
+				{/* Navigation Buttons */}
+				<Box
+					component="button"
+					onClick={handlePrev}
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: -10,
+						transform: 'translateY(-50%)',
+						bgcolor: 'white',
+						borderRadius: '50%',
+						boxShadow: 'md',
+						height: 30,
+						width: 30,
+						color: 'indigo.600',
+						'&:hover': {
+							color: 'indigo.400',
+							transform: 'translateY(-50%) scale(1.2)', // 마우스 오버시 1.2배 커짐
+						},
+						ml: -6,
+						border: 'none',
+						cursor: 'pointer',
+						transition: 'transform 0.2s ease-in-out', // 부드러운 크기 변화를 위한 전환 효과
+					}}
+				>
+					<ArrowBackIosNewIcon sx={{ width: '25px', color: 'slate-800' }} />
+				</Box>
+				<Box
+					component="button"
+					onClick={handleNext}
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						right: -10,
+						transform: 'translateY(-50%)',
+						bgcolor: 'white',
+						borderRadius: '50%',
+						boxShadow: 'md',
+						height: 30,
+						width: 30,
+						color: 'indigo.600',
+						'&:hover': {
+							color: 'indigo.400',
+							transform: 'translateY(-50%) scale(1.2)', // 마우스 오버시 1.2배 커짐
+						},
+						mr: -6,
+						border: 'none',
+						cursor: 'pointer',
+						transition: 'transform 0.2s ease-in-out', // 부드러운 크기 변화를 위한 전환 효과
+					}}
+				>
+					<ArrowBackIosNewIcon sx={{ width: '25px', color: 'slate-800', transform: 'rotate(180deg)' }} />
+				</Box>
+			</Box>
+
+			{/* Carousel Tabs */}
+			<Stack direction="row" spacing={2} sx={{ pt: 10, justifyContent: 'space-between', alignItems: 'center' }}>
+				{eventsData.map((event, index) => (
+					<Box
+						component="button"
+						key={event.eventTitle}
+						onClick={() => setActiveIndex(index)}
+						sx={{
+							px: 2,
+							opacity: activeIndex === index ? 1 : 0.5,
+							'&:hover': { opacity: 1 },
+							transition: 'opacity 0.3s',
+							border: 'none',
+							bgcolor: 'transparent',
+							cursor: 'pointer',
+						}}
+					>
+						<span>{event.eventTitle}</span>
+					</Box>
+				))}
 			</Stack>
-		);
-	}
+		</Stack>
+	);
 };
 
-export default Events;
+export default EventCarousel;
