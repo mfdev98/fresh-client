@@ -100,7 +100,6 @@ const TopProperties = (props: TopPropertiesProps) => {
 						<Swiper
 							className={'top-property-swiper'}
 							slidesPerView={'auto'}
-							spaceBetween={15}
 							modules={[Autoplay, Navigation, Pagination]}
 							navigation={{
 								nextEl: '.swiper-top-next',
@@ -108,11 +107,12 @@ const TopProperties = (props: TopPropertiesProps) => {
 							}}
 							pagination={{
 								el: '.swiper-top-pagination',
+								clickable: true,
 							}}
 						>
 							{topProperties.map((property: Property) => {
 								return (
-									<SwiperSlide className={'top-property-slide'} key={property?._id}>
+									<SwiperSlide className="top-property-slide flex justify-center mx-auto" key={property?._id}>
 										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
 									</SwiperSlide>
 								);

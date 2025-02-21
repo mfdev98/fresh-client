@@ -117,7 +117,7 @@ const TopAgents = (props: TopAgentsProps) => {
 							</Swiper>
 						</Box>
 						<Box component={'div'} className={'switch-btn swiper-agents-next'}>
-							<ArrowBackIosNewIcon sx={{ color: 'white', transform: "rotate(180deg)" }} />
+							<ArrowBackIosNewIcon sx={{ color: 'white', transform: 'rotate(180deg)' }} />
 						</Box>
 					</Stack>
 				</Stack>
