@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Stack, Box } from '@mui/material';
+import { Stack } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import WestIcon from '@mui/icons-material/West';
-import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import TopPropertyCard from './TopPropertyCard';
@@ -14,6 +12,7 @@ import { T } from '../../types/common';
 import { LIKE_TARGET_PROPERTY } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
+import { Typography } from '@mui/material';
 
 interface TopPropertiesProps {
 	initialInput: PropertiesInquiry;
@@ -91,10 +90,15 @@ const TopProperties = (props: TopPropertiesProps) => {
 			<Stack className={'top-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Top Destinations</span>
-							<p>Check out our Top Destinations</p>
-						</Box>
+						<div className="space-y-5  md:text-center">
+							<Typography
+								variant="h1"
+								className="mb-5 text-3xl font-semibold text-slate-900 md:text-center md:text-5xl"
+							>
+								Top Destinations
+							</Typography>
+							<p className="text-xl text-slate-900 md:text-center md:text-2xl">Check out our Top Destinations</p>
+						</div>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper

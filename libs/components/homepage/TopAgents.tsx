@@ -11,6 +11,7 @@ import { AgentsInquiry } from '../../types/member/member.input';
 import { GET_AGENTS } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { T } from '../../types/common';
+import { Typography } from '@mui/material';
 
 interface TopAgentsProps {
 	initialInput: AgentsInquiry;
@@ -71,10 +72,15 @@ const TopAgents = (props: TopAgentsProps) => {
 			<Stack className={'top-agents'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Meet Our Top Agents</span>
-							<p>Our Top Agents always ready to serve you</p>
-						</Box>
+						<div className="space-y-5  md:text-center mt-10">
+							<Typography
+								variant="h1"
+								className="mb-5 text-3xl font-semibold text-slate-900 md:text-center md:text-5xl"
+							>
+								Meet Our Top Agents
+							</Typography>
+							<p className="text-xl text-slate-900 md:text-center md:text-2xl">Top Agents always ready to serve you</p>
+						</div>
 						<Box component={'div'} className={'right'}>
 							<div className={'more-box'} onClick={() => router.push('/agent')}>
 								<span>See All Agents</span>

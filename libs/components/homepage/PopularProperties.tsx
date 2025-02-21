@@ -12,6 +12,7 @@ import { PropertiesInquiry } from '../../types/property/property.input';
 import { GET_PROPERTIES } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { T } from '../../types/common';
+import { Typography } from '@mui/material';
 
 interface PopularPropertiesProps {
 	initialInput: PropertiesInquiry;
@@ -37,7 +38,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 			setPopularProperties(data?.getProperties?.list);
 		},
 	});
-	
+
 	/** HANDLERS **/
 
 	if (!popularProperties) return null;
@@ -74,10 +75,16 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 			<Stack className={'popular-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Popular Bookings</span>
-							<p>Popularity is based on views</p>
-						</Box>
+						<div className="mb-12 space-y-5 md:mb-16 md:text-center">
+							<Typography
+								variant="h1"
+								className="mb-5 text-3xl font-semibold text-slate-900 md:text-center md:text-5xl"
+							>
+								Popular Bookings
+							</Typography>
+							<p className="text-xl text-slate-900 md:text-center md:text-2xl">Popularity is based on views</p>
+						</div>
+
 						<Box component={'div'} className={'right'}>
 							<div className={'more-box'}>
 								<Link href={'/property'}>

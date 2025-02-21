@@ -1,11 +1,14 @@
+import { Typography } from '@mui/material';
+
 const TrendCard = () => {
 	return (
 		<section className="bg-white overflow-hidden mt-18">
-			<span className="text-[#181a20] text-[44px] font-medium leading-[150%] tracking-[-0.646px] capitalize italic text-center block mt-10">
-				We Offer Best Services
-			</span>
-			<p className="text-[#181a20] text-sm font-normal leading-[26px] text-center">To improve corporate value</p>
-
+			<div className=" space-y-5  md:text-center mt-12">
+				<Typography variant="h1" className="mb-5 text-3xl font-semibold text-slate-900 md:text-center md:text-5xl">
+					We Offer Best Services
+				</Typography>
+				<p className="text-xl text-slate-900 md:text-center md:text-2xl">To improve corporate value</p>
+			</div>
 			<div className="max-w-screen-xl 2xl:max-w-screen-3xl px-8 md:px-12 mx-auto py-12 lg:py-24 space-y-24 h-svh flex flex-col justify-center">
 				{/* Image Cards */}
 				<div className="flex flex-col sm:flex-row mx-auto mt-20">
