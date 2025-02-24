@@ -210,6 +210,83 @@ export const LIKE_TARGET_PROPERTY = gql`
 `;
 
 /**************************
+ *        BOOKING        *
+ *************************/
+
+export const CREATE_BOOKING = gql`
+	mutation CreateBooking($input: BookingInput!) {
+		createBooking(input: $input) {
+			_id
+			bookingType
+			bookingStatus
+			bookingLocation
+			bookingTitle
+			bookingPrice
+			bookingViews
+			bookingLikes
+			bookingComments
+			bookingRank
+			bookingImages
+			bookingDesc
+			memberId
+			soldAt
+			createdAt
+			deletedAt
+			constructedAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_BOOKING = gql`
+	mutation UpdateBooking($input: BookingUpdate!) {
+		updateBooking(input: $input) {
+			_id
+			bookingType
+			bookingStatus
+			bookingLocation
+			bookingTitle
+			bookingPrice
+			bookingViews
+			bookingLikes
+			bookingComments
+			bookingRank
+			bookingImages
+			bookingDesc
+			memberId
+			soldAt
+			createdAt
+			deletedAt
+			constructedAt
+			updatedAt
+		}
+	}
+`;
+
+export const LIKE_TARGET_BOOKING = gql`
+	mutation LikeTargetBooking($input: String!) {
+		likeTargetBooking(bookingId: $input) {
+			_id
+			bookingType
+			bookingStatus
+			bookingLocation
+			bookingTitle
+			bookingPrice
+			bookingViews
+			bookingLikes
+			bookingImages
+			bookingDesc
+			memberId
+			soldAt
+			deletedAt
+			constructedAt
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+/**************************
  *      BOARD-ARTICLE     *
  *************************/
 

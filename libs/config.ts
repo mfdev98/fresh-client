@@ -21,3 +21,4 @@ export const Messages = {
 };
 
 export const topPropertyRank = 2;
+export const topBookingRank = 2;

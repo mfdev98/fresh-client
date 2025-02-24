@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,6 +13,8 @@ import { LIKE_TARGET_PROPERTY } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
 import { Typography } from '@mui/material';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface TopPropertiesProps {
 	initialInput: PropertiesInquiry;
@@ -58,81 +60,59 @@ const TopProperties = (props: TopPropertiesProps) => {
 		}
 	};
 
-	if (device === 'mobile') {
-		return (
-			<Stack className={'top-properties'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<span>Top properties</span>
-					</Stack>
-					<Stack className={'card-box'}>
-						<Swiper
-							className={'top-property-swiper'}
-							slidesPerView={'auto'}
-							centeredSlides={true}
-							spaceBetween={15}
-							modules={[Autoplay]}
-						>
-							{topProperties.map((property: Property) => {
-								return (
-									<SwiperSlide className={'top-property-slide'} key={property?._id}>
-										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
-									</SwiperSlide>
-								);
-							})}
-						</Swiper>
-					</Stack>
+	useEffect(() => {
+		AOS.init({
+			duration: 3000, // Animation duration in milliseconds
+			offset: 100, // Offset (in px) from the viewport to trigger animations
+			once: false, // Whether animation should happen only once
+		});
+	}, []);
+
+	return (
+		<Stack className={'top-properties'} data-aos={'zoom-in-up'}>
+			<div className="w-full flex items-center justify-between ">
+				<img src="/img/logo/stars.svg" alt="" className="w-42 md:w-46 scale-x-[-1]" />
+				<div className="text-center space-y-5">
+					<Typography variant="h1" className=" text-3xl font-semibold text-slate-900 md:text-5xl">
+						Top Destinations
+					</Typography>
+					<p className="text-xl text-slate-900 md:text-2xl">Check out our Top Destinations</p>
+				</div>
+				<img src="/img/logo/stars.svg" alt="" className="w-42 md:w-46" />
+			</div>
+			<Stack className={'container '}>
+				<Stack className={'card-box'}>
+					<Swiper
+						className={'top-property-swiper'}
+						slidesPerView={'auto'}
+						modules={[Autoplay, Navigation, Pagination]}
+						navigation={{
+							nextEl: '.swiper-top-next',
+							prevEl: '.swiper-top-prev',
+						}}
+						pagination={{
+							el: '.swiper-top-pagination',
+							clickable: true,
+						}}
+					>
+						{topProperties.map((property: Property) => {
+							return (
+								<SwiperSlide className="top-property-slide flex justify-center mx-auto" key={property?._id}>
+									<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
+								</SwiperSlide>
+							);
+						})}
+					</Swiper>
 				</Stack>
 			</Stack>
-		);
-	} else {
-		return (
-			<Stack className={'top-properties'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<div className="space-y-5  md:text-center">
-							<Typography
-								variant="h1"
-								className="mb-5 text-3xl font-semibold text-slate-900 md:text-center md:text-5xl"
-							>
-								Top Destinations
-							</Typography>
-							<p className="text-xl text-slate-900 md:text-center md:text-2xl">Check out our Top Destinations</p>
-						</div>
-					</Stack>
-					<Stack className={'card-box'}>
-						<Swiper
-							className={'top-property-swiper'}
-							slidesPerView={'auto'}
-							modules={[Autoplay, Navigation, Pagination]}
-							navigation={{
-								nextEl: '.swiper-top-next',
-								prevEl: '.swiper-top-prev',
-							}}
-							pagination={{
-								el: '.swiper-top-pagination',
-								clickable: true,
-							}}
-						>
-							{topProperties.map((property: Property) => {
-								return (
-									<SwiperSlide className="top-property-slide flex justify-center mx-auto" key={property?._id}>
-										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
-									</SwiperSlide>
-								);
-							})}
-						</Swiper>
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	}
+		</Stack>
+	);
 };
 
 TopProperties.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 8,
+		limit: 3,
 		sort: 'propertyRank',
 		direction: 'DESC',
 		search: {},

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Stack, Box, Divider, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -8,6 +8,8 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface PopularPropertyCardProps {
 	property: Property;
@@ -26,116 +28,64 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 		await router.push({ pathname: '/property/detail', query: { id: propertyId } });
 	};
 
-	if (device === 'mobile') {
-		return (
-			<Stack className="popular-card-box">
-				<Box
-					component={'div'}
-					className={'card-img'}
-					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${property?.propertyImages[0]})` }}
-					onClick={() => {
-						pushDetailHandler(property._id);
-					}}
-				>
-					{property && property?.propertyRank >= topPropertyRank ? (
-						<div className={'status'}>
-							<img src="/img/icons/electricity.svg" alt="" />
-							<span>top</span>
-						</div>
-					) : (
-						''
-					)}
+	useEffect(() => {
+		AOS.init({
+			duration: 3000, // Animation duration in milliseconds
+			offset: 100, // Offset (in px) from the viewport to trigger animations
+			once: false, // Whether animation should happen only once
+			easing: 'ease-in-out',
+		});
+	}, []);
 
-					<div className={'price'}>${property.propertyPrice}</div>
-				</Box>
-				<Box component={'div'} className={'info'}>
-					<strong
-						className={'title'}
-						onClick={() => {
-							pushDetailHandler(property._id);
-						}}
-					>
-						{property.propertyTitle}
-					</strong>
-					<p className={'desc'}>{property.propertyAddress}</p>
-					<div className={'options'}>
-						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyBeds} bed</span>
-						</div>
-						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyRooms} rooms</span>
-						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.propertySquare} m2</span>
-						</div>
-					</div>
-					<Divider sx={{ mt: '15px', mb: '17px' }} />
-					<div className={'bott'}>
-						<p>{property?.propertyRent ? 'rent' : 'sale'}</p>
-						<div className="view-like-box">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">{property?.propertyViews}</Typography>
-						</div>
-					</div>
-				</Box>
-			</Stack>
-		);
-	} else {
-		return (
-			<Stack className="popular-card-box">
-				<Box
-					component={'div'}
-					className={'card-img'}
-					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${property?.propertyImages[0]})` }}
+	return (
+		<Stack className="popular-card-box" data-aos="zoom-in-up">
+			<Box
+				component={'div'}
+				className={'card-img'}
+				style={{ backgroundImage: `url(${REACT_APP_API_URL}/${property?.propertyImages[0]})` }}
+				onClick={() => {
+					pushDetailHandler(property._id);
+				}}
+			>
+				<div className={'price'}>${property.propertyPrice}</div>
+			</Box>
+			<Box component={'div'} className={'info'}>
+				<strong
+					className={'title'}
 					onClick={() => {
 						pushDetailHandler(property._id);
 					}}
 				>
-					<div className={'price'}>${property.propertyPrice}</div>
-				</Box>
-				<Box component={'div'} className={'info'}>
-					<strong
-						className={'title'}
-						onClick={() => {
-							pushDetailHandler(property._id);
-						}}
-					>
-						{property.propertyTitle}
-					</strong>
-					<p className={'desc'}>{property.propertyAddress}</p>
-					<div className={'options'}>
-						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyBeds} bed</span>
-						</div>
-						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyRooms} rooms</span>
-						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.propertySquare} m2</span>
-						</div>
+					{property.propertyTitle}
+				</strong>
+				<p className={'desc'}>{property.propertyAddress}</p>
+				<div className={'options'}>
+					<div>
+						<img src="/img/icons/bed.svg" alt="" />
+						<span>{property?.propertyBeds} bed</span>
 					</div>
-					<Divider sx={{ mt: '15px', mb: '17px' }} />
-					<div className={'bott'}>
-						<p>{property?.propertyRent ? 'rent' : 'sale'}</p>
-						<div className="view-like-box">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">{property?.propertyViews}</Typography>
-						</div>
+					<div>
+						<img src="/img/icons/room.svg" alt="" />
+						<span>{property?.propertyRooms} rooms</span>
 					</div>
-				</Box>
-			</Stack>
-		);
-	}
+					<div>
+						<img src="/img/icons/expand.svg" alt="" />
+						<span>{property?.propertySquare} m2</span>
+					</div>
+				</div>
+				<Divider sx={{ mt: '15px', mb: '17px' }} />
+				<div className={'bott'}>
+					<p>{property?.propertyRent ? 'rent' : 'sale'}</p>
+					<div className="view-like-box">
+						<IconButton color={'default'}>
+							<RemoveRedEyeIcon />
+						</IconButton>
+						<Typography className="view-cnt">{property?.propertyViews}</Typography>
+					</div>
+				</div>
+			</Box>
+		</Stack>
+	);
 };
 
 export default PopularPropertyCard;
