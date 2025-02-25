@@ -17,8 +17,8 @@ interface BISearch {
 	locationList?: BookingLocation[];
 	typeList?: BookingType[];
 	options?: string[];
-	pricesRange?: Range;
-	periodsRange?: PeriodsRange;
+	priceRange?: Range;
+	periodRange?: PeriodRange;
 	text?: string;
 }
 
@@ -42,7 +42,7 @@ export interface AgentBookingsInquiry {
 	search: ABISearch;
 }
 
-interface ALPISearch {
+interface ALBISearch {
 	bookingStatus?: BookingStatus;
 	bookingLocationList?: BookingLocation[];
 }
@@ -52,7 +52,7 @@ export interface AllBookingsInquiry {
 	limit: number;
 	sort?: string;
 	direction?: Direction;
-	search: ALPISearch;
+	search: ALBISearch;
 }
 
 interface Range {
@@ -60,7 +60,7 @@ interface Range {
 	end: number;
 }
 
-interface PeriodsRange {
+interface PeriodRange {
 	start: Date | number;
 	end: Date | number;
 }

@@ -2,9 +2,8 @@ import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
 import BookingCard from '../../libs/components/booking/BookingCard';
-import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import Filter from '../../libs/components/property/Filter';
+import BookingFilter from '../../libs/components/booking/BookingFilter';
 import { useRouter } from 'next/router';
 import { BookingsInquiry } from '../../libs/types/booking/booking.input';
 import { Booking } from '../../libs/types/booking/booking';
@@ -12,7 +11,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_PROPERTIES } from '../../apollo/user/query';
+import { GET_BOOKINGS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_BOOKING } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
@@ -24,7 +23,6 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const BookingList: NextPage = ({ initialInput, ...props }: any) => {
-	const device = useDeviceDetect();
 	const router = useRouter();
 	const [searchFilter, setSearchFilter] = useState<BookingsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
@@ -44,13 +42,13 @@ const BookingList: NextPage = ({ initialInput, ...props }: any) => {
 		data: getBookingsData,
 		error: getBookingsError,
 		refetch: getBookingsRefetch,
-	} = useQuery(GET_PROPERTIES, {
+	} = useQuery(GET_BOOKINGS, {
 		fetchPolicy: 'network-only',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setBookings(data?.getProperties?.list);
-			setTotal(data?.getProperties?.metaCounter[0]?.total);
+			setBookings(data?.getBookings?.list);
+			setTotal(data?.getBookings?.metaCounter[0]?.total);
 		},
 	});
 
@@ -166,7 +164,7 @@ const BookingList: NextPage = ({ initialInput, ...props }: any) => {
 				<Stack className={'property-page'}>
 					<Stack className={'filter-config'}>
 						{/* @ts-ignore */}
-						<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
+						<BookingFilter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 					</Stack>
 					<Stack className="main-config" mb={'76px'}>
 						<Stack className={'list-config'}>
@@ -177,7 +175,9 @@ const BookingList: NextPage = ({ initialInput, ...props }: any) => {
 								</div>
 							) : (
 								bookings.map((booking: Booking) => {
-									return <BookingCard booking={booking} likeBookingHandler={likeBookingHandler} key={booking?._id} />;
+									return (
+										<BookingCard booking={booking} likeBookingHandler={likeBookingHandler} key={booking?._id} />
+									);
 								})
 							)}
 						</Stack>
@@ -216,7 +216,7 @@ BookingList.defaultProps = {
 		sort: 'createdAt',
 		direction: 'DESC',
 		search: {
-			pricesRange: {
+			priceRange: {
 				start: 0,
 				end: 2000000,
 			},

@@ -154,7 +154,7 @@ const Top = () => {
 						<Link href={'/property'} className="underline-link">
 							<div>{t('Stays')}</div>
 						</Link>
-						<Link href={'/property'} className="underline-link">
+						<Link href={'/booking'} className="underline-link">
 							<div>{t('Booking')}</div>
 						</Link>
 						<Link href={'/agent'}>

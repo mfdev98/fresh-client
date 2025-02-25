@@ -42,7 +42,6 @@ export const GET_AGENTS = gql`
 	}
 `;
 
-
 export const GET_MEMBER = gql(`
 query GetMember($input: String!) {
     getMember(memberId: $input) {
@@ -360,32 +359,23 @@ export const GET_VISITED = gql`
 	}
 `;
 
-
-
-
 /**************************
  *        BOOKING        *
  *************************/
 
 export const GET_BOOKING = gql`
-	query GetProperty($input: String!) {
-		getProperty(propertyId: $input) {
+	query GetBooking($input: String!) {
+		getBooking(bookingId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			bookingType
+			bookingStatus
+			bookingLocation
+			bookingTitle
+			bookingPrice
+			bookingViews
+			bookingLikes
+			bookingImages
+			bookingDesc
 			memberId
 			soldAt
 			deletedAt
@@ -423,26 +413,19 @@ export const GET_BOOKING = gql`
 `;
 
 export const GET_BOOKINGS = gql`
-	query GetProperties($input: PropertiesInquiry!) {
-		getProperties(input: $input) {
+	query GetBookings($input: BookingsInquiry!) {
+		getBookings(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				bookingType
+				bookingStatus
+				bookingLocation
+				bookingTitle
+				bookingPrice
+				bookingViews
+				bookingLikes
+				bookingImages
+				bookingDesc
 				memberId
 				soldAt
 				deletedAt
@@ -485,25 +468,19 @@ export const GET_BOOKINGS = gql`
 `;
 
 export const GET_AGENT_BOOKINGS = gql`
-	query GetAgentProperties($input: AgentPropertiesInquiry!) {
-		getAgentProperties(input: $input) {
+	query GetAgentBookings($input: AgentBookingsInquiry!) {
+		getAgentBookings(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				bookingType
+				bookingStatus
+				bookingLocation
+				bookingTitle
+				bookingPrice
+				bookingViews
+				bookingLikes
+				bookingImages
+				bookingDesc
 				memberId
 				soldAt
 				deletedAt
@@ -523,23 +500,15 @@ export const GET_FAVORITES_BOOKING = gql`
 		getFavorites(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyComments
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				bookingType
+				bookingStatus
+				bookingLocation
+				bookingTitle
+				bookingPrice
+				bookingViews
+				bookingLikes
+				bookingImages
+				bookingDesc
 				memberId
 				soldAt
 				deletedAt
@@ -586,23 +555,15 @@ export const GET_VISITED_BOOKINGS = gql`
 		getVisited(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyComments
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				bookingType
+				bookingStatus
+				bookingLocation
+				bookingTitle
+				bookingPrice
+				bookingViews
+				bookingLikes
+				bookingImages
+				bookingDesc
 				memberId
 				soldAt
 				deletedAt
