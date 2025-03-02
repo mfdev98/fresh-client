@@ -64,7 +64,7 @@
 						padding: 0;
 						justify-content: center;
 						align-items: center;
-						background-color: #000000;
+						background: rgb(72, 155, 161);
 						color: #ffffff;
 						border-radius: 6px;
 						margin-bottom: 10px;
@@ -192,6 +192,7 @@
 										align-items: center;
 										justify-content: center;
 										gap: 4px;
+										cursor: pointer;
 										img {
 											width: 18.714px;
 											height: 16.15px;
@@ -234,7 +235,9 @@
 										gap: 5px;
 										border-radius: 2px;
 										border: 1px solid #eee;
-										background: #eb6753;
+										// background: #eb6753;
+										background: rgb(72, 155, 161);
+
 										p {
 											color: #fff;
 											font-family: $font;

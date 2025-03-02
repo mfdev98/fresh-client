@@ -31,50 +31,26 @@ const withLayoutBasic = (Component: any) => {
 
 		/** HANDLERS **/
 
-		if (device == 'mobile') {
-			return (
-				<>
-					<Head>
-						<title>FreshTour</title>
-						<meta name={'title'} content={`Nestar`} />
-					</Head>
-					<Stack id="mobile-wrap">
-						<Stack id={'top'}>
-							<Top />
-						</Stack>
-
-						<Stack id={'main'}>
-							<Component {...props} />
-						</Stack>
-
-						<Stack id={'footer'}>
-							<Footer />
-						</Stack>
+		return (
+			<>
+				<Head>
+					<title>FreshTour</title>
+					<meta name={'title'} content={`Nestar`} />
+				</Head>
+				<Stack id="pc-wrap">
+					<Stack id={'top'}>
+						<Top />
 					</Stack>
-				</>
-			);
-		} else {
-			return (
-				<>
-					<Head>
-						<title>FreshTour</title>
-						<meta name={'title'} content={`Nestar`} />
-					</Head>
-					<Stack id="pc-wrap">
-						<Stack id={'top'}>
-							<Top />
-						</Stack>
-						<Stack id={'main'}>
-							<Component {...props} />
-						</Stack>
-						{<Chat />}
-						<Stack id={'footer'}>
-							<Footer />
-						</Stack>
+					<Stack id={'main'}>
+						<Component {...props} />
 					</Stack>
-				</>
-			);
-		}
+					{<Chat />}
+					<Stack id={'footer'}>
+						<Footer />
+					</Stack>
+				</Stack>
+			</>
+		);
 	};
 };
 

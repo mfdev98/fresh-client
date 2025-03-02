@@ -29,6 +29,7 @@ const BookingFilter = (props: FilterType) => {
 	const [bookingType, setBookingType] = useState<BookingType[]>(Object.values(BookingType));
 	const [searchText, setSearchText] = useState<string>('');
 	const [showMore, setShowMore] = useState<boolean>(false);
+	const [showMore2, setShowMore2] = useState<boolean>(false);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -236,7 +237,9 @@ const BookingFilter = (props: FilterType) => {
 	return (
 		<Stack className={'filter-main'}>
 			<Stack className={'find-your-home'} mb={'40px'}>
-				<Typography className={'title-main'}>Find Your Home</Typography>
+				<div className={'find-text'}>
+					<Typography className={'title-main'}>Find Your Trip Here</Typography>
+				</div>
 				<Stack className={'input-box'}>
 					<OutlinedInput
 						value={searchText}
@@ -275,17 +278,31 @@ const BookingFilter = (props: FilterType) => {
 				</Stack>
 			</Stack>
 			<Stack className={'find-your-home'} mb={'30px'}>
-				<p className={'title'} style={{ textShadow: '0px 3px 4px #b9b9b9' }}>
-					Location
-				</p>
+				<Stack
+					direction="row"
+					alignItems="center"
+					spacing={1}
+					onClick={() => setShowMore(!showMore)}
+					style={{ cursor: 'pointer' }}
+				>
+					<p className={'title'} style={{ textShadow: '0px 3px 4px #b9b9b9' }}>
+						Location
+					</p>
+					<span
+						style={{
+							transform: showMore ? 'rotate(180deg)' : 'rotate(0deg)',
+							transition: 'transform 0.3s ease',
+						}}
+					>
+						▼
+					</span>
+				</Stack>
 				<Stack
 					className={`property-location`}
-					style={{ height: showMore ? '253px' : '115px' }}
-					onMouseEnter={() => setShowMore(true)}
-					onMouseLeave={() => {
-						if (!searchFilter?.search?.locationList) {
-							setShowMore(false);
-						}
+					style={{
+						height: showMore ? '253px' : '0px',
+						overflow: 'hidden',
+						transition: 'height 0.3s ease',
 					}}
 				>
 					{bookingLocation.map((location: string) => {
@@ -309,23 +326,47 @@ const BookingFilter = (props: FilterType) => {
 				</Stack>
 			</Stack>
 			<Stack className={'find-your-home'} mb={'30px'}>
-				<Typography className={'title'}>Property Type</Typography>
-				{bookingType.map((type: string) => (
-					<Stack className={'input-box'} key={type}>
-						<Checkbox
-							id={type}
-							className="property-checkbox"
-							color="default"
-							size="small"
-							value={type}
-							onChange={bookingTypeSelectHandler}
-							checked={(searchFilter?.search?.typeList || []).includes(type as BookingType)}
-						/>
-						<label style={{ cursor: 'pointer' }}>
-							<Typography className="property_type">{type}</Typography>
-						</label>
-					</Stack>
-				))}
+				<Stack
+					direction="row"
+					alignItems="center"
+					spacing={1}
+					onClick={() => setShowMore2(!showMore2)}
+					style={{ cursor: 'pointer' }}
+				>
+					<Typography className={'title'}>Property Type</Typography>
+					<span
+						style={{
+							transform: showMore2 ? 'rotate(180deg)' : 'rotate(0deg)',
+							transition: 'transform 0.5s ease',
+						}}
+					>
+						▼
+					</span>
+				</Stack>
+				<Stack
+					style={{
+						height: showMore2 ? 'auto' : '0px',
+						overflow: 'hidden',
+						transition: 'height 0.5s ease',
+					}}
+				>
+					{bookingType.map((type: string) => (
+						<Stack className={'input-box'} key={type}>
+							<Checkbox
+								id={type}
+								className="property-checkbox"
+								color="default"
+								size="small"
+								value={type}
+								onChange={bookingTypeSelectHandler}
+								checked={(searchFilter?.search?.typeList || []).includes(type as BookingType)}
+							/>
+							<label style={{ cursor: 'pointer' }}>
+								<Typography className="property_type">{type}</Typography>
+							</label>
+						</Stack>
+					))}
+				</Stack>
 			</Stack>
 
 			<Stack className={'find-your-home'}>

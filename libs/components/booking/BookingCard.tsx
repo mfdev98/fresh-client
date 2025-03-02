@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Stack, Typography, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -11,6 +11,8 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface BookingCardType {
 	booking: Booking;
@@ -27,8 +29,17 @@ const BookingCard = (props: BookingCardType) => {
 		? `${REACT_APP_API_URL}/${booking?.bookingImages[0]}`
 		: '/img/banner/header1.svg';
 
+	useEffect(() => {
+		AOS.init({
+			duration: 3000, // Animation duration in milliseconds
+			offset: 100, // Offset (in px) from the viewport to trigger animations
+			once: false, // Whether animation should happen only once
+			easing: 'ease-in-out',
+		});
+	}, []);
+
 	return (
-		<Stack className="card-config">
+		<Stack className="card-config" data-aos="zoom-in-up">
 			<Stack className="top">
 				<Link
 					href={{

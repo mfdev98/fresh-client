@@ -39,7 +39,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 				<Stack className={'info-box'}>
 					<div className="mb-12 space-y-5 md:mb-16 md:text-center">
 						<Typography variant="h1" className="mb-5 text-3xl font-semibold text-slate-900 md:text-center md:text-5xl">
-							Popular Bookings
+							Popular Stays
 						</Typography>
 						<p className="text-xl text-slate-900 md:text-center md:text-2xl">Popularity is based on views</p>
 					</div>

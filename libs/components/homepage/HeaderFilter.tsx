@@ -319,15 +319,15 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 			<Stack className={'search-box'}>
 				<Stack className={'select-box'}>
 					<Box component={'div'} className={`box ${openLocation ? 'on' : ''}`} onClick={locationStateChangeHandler}>
-						<span>{searchFilter?.search?.locationList ? searchFilter?.search?.locationList[0] : t('Location')} </span>
+						<span>{searchFilter?.search?.locationList ? searchFilter?.search?.locationList[0] : ('Location')} </span>
 						<ExpandMoreIcon />
 					</Box>
 					<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
-						<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : t('Stay Type')} </span>
+						<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : ('Stay Type')} </span>
 						<ExpandMoreIcon />
 					</Box>
 					<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
-						<span>{searchFilter?.search?.roomsList ? `${searchFilter?.search?.roomsList[0]} rooms}` : t('Rooms')}</span>
+						<span>{searchFilter?.search?.roomsList ? `${searchFilter?.search?.roomsList[0]} rooms}` : ('Rooms')}</span>
 						<ExpandMoreIcon />
 					</Box>
 				</Stack>
@@ -355,7 +355,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					{propertyType.map((type: string) => {
 						return (
 							<div
-								style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.webp)` }}
+								//style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.webp)` }}
 								onClick={() => propertyTypeSelectHandler(type)}
 								key={type}
 							>
@@ -390,7 +390,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<CloseIcon />
 						</div>
 						<div className={'top'}>
-							<span>Find your home</span>
+							<span>Find your room</span>
 							<div className={'search-input-box'}>
 								<img src="/img/icons/search.svg" alt="" />
 								<input

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Stack, Typography, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -11,6 +11,9 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface PropertyCardType {
 	property: Property;
@@ -26,9 +29,18 @@ const PropertyCard = (props: PropertyCardType) => {
 	const imagePath: string = property?.propertyImages[0]
 		? `${REACT_APP_API_URL}/${property?.propertyImages[0]}`
 		: '/img/banner/header1.svg';
+	
+	useEffect(() => {
+				AOS.init({
+					duration: 3000, // Animation duration in milliseconds
+					offset: 100, // Offset (in px) from the viewport to trigger animations
+					once: false, // Whether animation should happen only once
+					easing: 'ease-in-out',
+				});
+			}, []);
 
 	return (
-		<Stack className="card-config">
+		<Stack className="card-config" data-aos="zoom-in-up">
 			<Stack className="top">
 				<Link
 					href={{
@@ -79,20 +91,6 @@ const PropertyCard = (props: PropertyCardType) => {
 				</Stack>
 				<Stack className="divider"></Stack>
 				<Stack className="type-buttons">
-					<Stack className="type">
-						<Typography
-							sx={{ fontWeight: 500, fontSize: '13px' }}
-							className={property.propertyRent ? '' : 'disabled-type'}
-						>
-							Rent
-						</Typography>
-						<Typography
-							sx={{ fontWeight: 500, fontSize: '13px' }}
-							className={property.propertyBarter ? '' : 'disabled-type'}
-						>
-							Barter
-						</Typography>
-					</Stack>
 					{!recentlyVisited && (
 						<Stack className="buttons">
 							<IconButton color={'default'}>

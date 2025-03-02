@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Box } from '@mui/material';
@@ -16,17 +16,13 @@ const CommunityCard: React.FC<CommunityCardProps> = ({ vertical, article, index 
   const articleImage = article?.articleImage
     ? `${process.env.REACT_APP_API_URL}/${article?.articleImage}`
     : '/img/event.svg';
+  
+   
 
-  if (device === 'mobile') {
-    return (
-      <div className="text-white p-4 bg-slate-800 rounded-lg">
-        COMMUNITY CARD (MOBILE)
-      </div>
-    );
-  }
+ 
 
   return (
-    <div className="text-sm leading-6 ">
+    <div className="text-sm leading-6 " >
       <div className="relative group ">
         <div className="absolute transition rounded-lg opacity-25 -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur duration-400 group-hover:opacity-100 group-hover:duration-200"></div>
         <Link href={`/community/detail?articleCategory=${article?.articleCategory}&id=${article?._id}`}>

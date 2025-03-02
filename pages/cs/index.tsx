@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Box, Stack } from '@mui/material';
@@ -7,12 +7,16 @@ import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import Notice from '../../libs/components/cs/Notice';
 import Faq from '../../libs/components/cs/Faq';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
 		...(await serverSideTranslations(locale, ['common'])),
 	},
 });
+
+
 
 const CS: NextPage = () => {
 	const device = useDeviceDetect();
@@ -31,43 +35,47 @@ const CS: NextPage = () => {
 	};
 	const tab = router.query.tab ?? 'notice';
 
-	if (device === 'mobile') {
-		return <h1>CS PAGE MOBILE</h1>;
-	} else {
-		return (
-			<Stack className={'cs-page'}>
-				<Stack className={'container'}>
-					<Box component={'div'} className={'cs-main-info'}>
-						
-						<Box component={'div'} className={'btns'}>
-							<div
-								className={tab == 'notice' ? 'active' : ''}
-								onClick={() => {
-									changeTabHandler('notice');
-								}}
-							>
-								Notice
-							</div>
-							<div
-								className={tab == 'faq' ? 'active' : ''}
-								onClick={() => {
-									changeTabHandler('faq');
-								}}
-							>
-								FAQ
-							</div>
-						</Box>
-					</Box>
+	useEffect(() => {
+		AOS.init({
+			duration: 3000, // Animation duration in milliseconds
+			offset: 100, // Offset (in px) from the viewport to trigger animations
+			once: false, // Whether animation should happen only once
+			easing: 'ease-in-out',
+		});
+	}, []);
 
-					<Box component={'div'} className={'cs-content'}>
-						{tab === 'notice' && <Notice />}
-
-						{tab === 'faq' && <Faq />}
+	return (
+		<Stack className={'cs-page'} data-aos="fade-down">
+			<Stack className={'container'}>
+				<Box component={'div'} className={'cs-main-info'}>
+					<Box component={'div'} className={'btns'}>
+						<div
+							className={tab == 'notice' ? 'active' : ''}
+							onClick={() => {
+								changeTabHandler('notice');
+							}}
+						>
+							Notice
+						</div>
+						<div
+							className={tab == 'faq' ? 'active' : ''}
+							onClick={() => {
+								changeTabHandler('faq');
+							}}
+						>
+							FAQ
+						</div>
 					</Box>
-				</Stack>
+				</Box>
+
+				<Box component={'div'} className={'cs-content'}>
+					{tab === 'notice' && <Notice />}
+
+					{tab === 'faq' && <Faq />}
+				</Box>
 			</Stack>
-		);
-	}
+		</Stack>
+	);
 };
 
 export default withLayoutBasic(CS);

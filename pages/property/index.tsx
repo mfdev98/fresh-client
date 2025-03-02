@@ -16,6 +16,8 @@ import { GET_PROPERTIES } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -54,6 +56,15 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	});
 
 	/** LIFECYCLES **/
+	useEffect(() => {
+		AOS.init({
+			duration: 3000, // Animation duration in milliseconds
+			offset: 100, // Offset (in px) from the viewport to trigger animations
+			once: false, // Whether animation should happen only once
+			easing: 'ease-in-out',
+		});
+	}, []);
+
 	useEffect(() => {
 		if (router.query.input) {
 			const inputObj = JSON.parse(router?.query?.input as string);
@@ -126,7 +137,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	return (
-		<div id="property-list-page" style={{ position: 'relative' }}>
+		<div id="property-list-page" style={{ position: 'relative' }} data-aos="fade-up">
 			<div className="container">
 				<Box component={'div'} className={'right'}>
 					<span>Sort by</span>
@@ -198,7 +209,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 							{properties.length !== 0 && (
 								<Stack className="total-result">
 									<Typography>
-										Total {total} propert{total > 1 ? 'ies' : 'y'} available
+										Total {total} Stay{total > 1 ? 's' : ''} available
 									</Typography>
 								</Stack>
 							)}

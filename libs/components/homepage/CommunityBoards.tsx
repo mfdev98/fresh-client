@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Typography } from '@mui/material';
@@ -37,14 +37,6 @@ const CommunityBoards: React.FC = () => {
 			setFreeArticles(data?.getBoardArticles?.list);
 		},
 	});
-
-	if (device === 'mobile') {
-		return (
-			<section className="py-20 bg-slate-900">
-				<div className="max-w-6xl mx-8">COMMUNITY BOARDS (MOBILE)</div>
-			</section>
-		);
-	}
 
 	return (
 		<section id="community-boards" className="py-20 bg-white">

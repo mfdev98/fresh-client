@@ -149,27 +149,24 @@ const Top = () => {
 					</Box>
 					<Box component={'div'} className={'router-box'}>
 						<Link href={'/'}>
-							<div>{t('Home')}</div>
+							<div>{('Home')}</div>
 						</Link>
 						<Link href={'/property'} className="underline-link">
-							<div>{t('Stays')}</div>
+							<div>{('Stays')}</div>
 						</Link>
 						<Link href={'/booking'} className="underline-link">
-							<div>{t('Booking')}</div>
-						</Link>
-						<Link href={'/agent'}>
-							<div> {t('Agents')} </div>
+							<div>{('Booking')}</div>
 						</Link>
 						<Link href={'/community?articleCategory=FREE'}>
-							<div> {t('Community')} </div>
+							<div> {('Community')} </div>
 						</Link>
 						{user?._id && (
 							<Link href={'/mypage'}>
-								<div> {t('My Page')} </div>
+								<div> {('My Page')} </div>
 							</Link>
 						)}
 						<Link href={'/cs'}>
-							<div> {t('CS')} </div>
+							<div> {('CS')} </div>
 						</Link>
 					</Box>
 
@@ -205,7 +202,7 @@ const Top = () => {
 						) : (
 							<Link href={'/account/join'}>
 								<div className={'join-box'}>
-									<span>{t('Login')}</span>
+									<span>{('Login')}</span>
 								</div>
 							</Link>
 						)}

@@ -8,6 +8,7 @@ import MyProperties from '../../libs/components/mypage/MyProperties';
 import MyFavorites from '../../libs/components/mypage/MyFavorites';
 import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
 import AddProperty from '../../libs/components/mypage/AddNewProperty';
+import AddBooking from '../../libs/components/mypage/AddNewBooking';
 import MyProfile from '../../libs/components/mypage/MyProfile';
 import MyArticles from '../../libs/components/mypage/MyArticles';
 import { useMutation, useReactiveVar } from '@apollo/client';
@@ -15,16 +16,14 @@ import { userVar } from '../../apollo/store';
 import MyMenu from '../../libs/components/mypage/MyMenu';
 import WriteArticle from '../../libs/components/mypage/WriteArticle';
 import MemberFollowers from '../../libs/components/member/MemberFollowers';
-import {
-	sweetErrorHandling,
-	sweetMixinErrorAlert,
-	sweetTopSmallSuccessAlert,
-	sweetTopSuccessAlert,
-} from '../../libs/sweetAlert';
+import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import MemberFollowings from '../../libs/components/member/MemberFollowings';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages } from '../../libs/config';
+import MyBookings from '../../libs/components/mypage/MyBookings';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -45,6 +44,16 @@ const MyPage: NextPage = () => {
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
 	/** LIFECYCLES **/
+
+	useEffect(() => {
+		AOS.init({
+			duration: 3000, // Animation duration in milliseconds
+			offset: 100, // Offset (in px) from the viewport to trigger animations
+			once: false, // Whether animation should happen only once
+			easing: 'ease-in-out',
+		});
+	}, []);
+
 	useEffect(() => {
 		if (!user._id) router.push('/').then();
 	}, [user]);
@@ -108,50 +117,48 @@ const MyPage: NextPage = () => {
 		}
 	};
 
-	if (device === 'mobile') {
-		return <div>MY PAGE</div>;
-	} else {
-		return (
-			<div id="my-page" style={{ position: 'relative' }}>
-				<div className="container">
-					<Stack className={'my-page'}>
-						<Stack className={'back-frame'}>
-							<Stack className={'left-config'}>
-								<MyMenu />
-							</Stack>
-							<Stack className="main-config" mb={'76px'}>
-								<Stack className={'list-config'}>
-									{category === 'addProperty' && <AddProperty />}
-									{category === 'myProperties' && <MyProperties />}
-									{category === 'myFavorites' && <MyFavorites />}
-									{category === 'recentlyVisited' && <RecentlyVisited />}
-									{category === 'myArticles' && <MyArticles />}
-									{category === 'writeArticle' && <WriteArticle />}
-									{category === 'myProfile' && <MyProfile />}
-									{category === 'followers' && (
-										<MemberFollowers
-											subscribeHandler={subscribeHandler}
-											unsubscribeHandler={unsubscribeHandler}
-											likeMemberHandler={likeMemberHandler}
-											redirectToMemberPageHandler={redirectToMemberPageHandler}
-										/>
-									)}
-									{category === 'followings' && (
-										<MemberFollowings
-											subscribeHandler={subscribeHandler}
-											unsubscribeHandler={unsubscribeHandler}
-											likeMemberHandler={likeMemberHandler}
-											redirectToMemberPageHandler={redirectToMemberPageHandler}
-										/>
-									)}
-								</Stack>
+	return (
+		<div id="my-page" style={{ position: 'relative' }} data-aos="fade-up">
+			<div className="container">
+				<Stack className={'my-page'}>
+					<Stack className={'back-frame'}>
+						<Stack className={'left-config'}>
+							<MyMenu />
+						</Stack>
+						<Stack className="main-config" mb={'76px'}>
+							<Stack className={'list-config'}>
+								{category === 'addProperty' && <AddProperty />}
+								{category === 'addBooking' && <AddBooking />}
+								{category === 'myProperties' && <MyProperties />}
+								{category === 'myBookings' && <MyBookings />}
+								{category === 'myFavorites' && <MyFavorites />}
+								{category === 'recentlyVisited' && <RecentlyVisited />}
+								{category === 'myArticles' && <MyArticles />}
+								{category === 'writeArticle' && <WriteArticle />}
+								{category === 'myProfile' && <MyProfile />}
+								{category === 'followers' && (
+									<MemberFollowers
+										subscribeHandler={subscribeHandler}
+										unsubscribeHandler={unsubscribeHandler}
+										likeMemberHandler={likeMemberHandler}
+										redirectToMemberPageHandler={redirectToMemberPageHandler}
+									/>
+								)}
+								{category === 'followings' && (
+									<MemberFollowings
+										subscribeHandler={subscribeHandler}
+										unsubscribeHandler={unsubscribeHandler}
+										likeMemberHandler={likeMemberHandler}
+										redirectToMemberPageHandler={redirectToMemberPageHandler}
+									/>
+								)}
 							</Stack>
 						</Stack>
 					</Stack>
-				</div>
+				</Stack>
 			</div>
-		);
-	}
+		</div>
+	);
 };
 
 export default withLayoutBasic(MyPage);
