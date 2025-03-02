@@ -27,7 +27,7 @@ const BookingCard = (props: BookingCardType) => {
 	const user = useReactiveVar(userVar);
 	const imagePath: string = booking?.bookingImages[0]
 		? `${REACT_APP_API_URL}/${booking?.bookingImages[0]}`
-		: '/img/banner/header1.svg';
+		: '/img/media/header1.svg';
 
 	useEffect(() => {
 		AOS.init({

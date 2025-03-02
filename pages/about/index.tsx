@@ -50,7 +50,7 @@ const About: NextPage = () => {
 				<Stack className={'statistics'}>
 					<Stack className={'container'}>
 						<Stack className={'banner'}>
-							<img src="/img/banner/header1.svg" alt="" />
+							<img src="/img/media/header1.svg" alt="" />
 						</Stack>
 						<Stack className={'info'}>
 							<Box component={'div'}>
@@ -80,7 +80,7 @@ const About: NextPage = () => {
 					</Stack>
 				</Stack>
 				<Stack className={'options'}>
-					<img src="/img/banner/aboutBanner.svg" alt="" className={'about-banner'} />
+					<img src="/img/media/aboutBanner.svg" alt="" className={'about-banner'} />
 					<Stack className={'container'}>
 						<strong>Let’s find the right selling option for you</strong>
 						<Stack>

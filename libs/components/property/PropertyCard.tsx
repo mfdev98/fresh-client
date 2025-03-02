@@ -28,7 +28,7 @@ const PropertyCard = (props: PropertyCardType) => {
 	const user = useReactiveVar(userVar);
 	const imagePath: string = property?.propertyImages[0]
 		? `${REACT_APP_API_URL}/${property?.propertyImages[0]}`
-		: '/img/banner/header1.svg';
+		: '/img/media/header1.svg';
 	
 	useEffect(() => {
 				AOS.init({

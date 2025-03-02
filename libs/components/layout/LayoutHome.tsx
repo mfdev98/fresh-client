@@ -39,7 +39,7 @@ const withLayoutMain = (Component: any) => {
 					</Stack>
 					<Stack data-aos={'zoom-in-up'} className={'header-main'}>
 						<div className="relative w-full mx-auto h-full">
-							<img src="/img/banner/header01.jpg" alt="Header Banner" className="w-full h-[500] object-cover" />
+							<img src="/img/media/header01.jpg" alt="Header Banner" className="w-full h-[500] object-cover" />
 						</div>
 						<Stack className={'container'}>
 							<HeaderFilter />
