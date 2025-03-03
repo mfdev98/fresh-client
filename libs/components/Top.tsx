@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { getJwtToken, logOut, updateUserInfo } from '../auth';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Typography, IconButton, Badge } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
@@ -12,10 +12,41 @@ import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import { useReactiveVar } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
+
+import { NotificationStatus } from '../enums/notification.enum';
+import { GET_NOTIFICATIONS } from '../../apollo/user/query';
+import { UPDATE_NOTIFICATION } from '../../apollo/user/mutation';
+import { Notification } from '../types/notification/notification';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { T } from '../types/common';
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'flex-start',
+	padding: theme.spacing(2),
+	borderRadius: theme.shape.borderRadius,
+	transition: 'background-color 0.3s',
+	'&:hover': {
+		backgroundColor: status === 'WAIT' ? '#fcb6b9' : '#b3e6b3',
+	},
+	'& .notification-title': {
+		fontWeight: 'bold',
+		marginBottom: theme.spacing(0.5),
+	},
+	'& .notification-desc': {
+		marginBottom: theme.spacing(1),
+	},
+	'& .notification-time': {
+		alignSelf: 'flex-end',
+		color: theme.palette.text.secondary,
+		fontSize: '0.75rem',
+	},
+}));
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -31,6 +62,28 @@ const Top = () => {
 	const [bgColor, setBgColor] = useState<boolean>(false);
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
+	const [notificationAnchor, setNotificationAnchor] = useState<null | HTMLElement>(null);
+	const [userNotifications, setUserNotifications] = useState<Notification[]>([]);
+	const notificationOpen = Boolean(notificationAnchor);
+
+	/** APOLLO **/
+
+	const {
+		loading: getNotificationsLoading,
+		data: getNotificationsData,
+		error: getNotificationsError,
+		refetch: getNotificationsRefetch,
+	} = useQuery(GET_NOTIFICATIONS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: user._id },
+		skip: !user?._id,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setUserNotifications(data?.getNotifications);
+		},
+	});
+
+	const [updateNotification] = useMutation(UPDATE_NOTIFICATION);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -56,6 +109,12 @@ const Top = () => {
 		const jwt = getJwtToken();
 		if (jwt) updateUserInfo(jwt);
 	}, []);
+
+	useEffect(() => {
+		if (user?._id) {
+			getNotificationsRefetch();
+		}
+	}, [user, getNotificationsRefetch]);
 
 	/** HANDLERS **/
 	const langClick = (e: any) => {
@@ -95,6 +154,35 @@ const Top = () => {
 			setAnchorEl(null);
 		}
 	};
+
+	const handleNotificationClick = (event: any) => {
+		setNotificationAnchor(event.currentTarget);
+	};
+
+	const handleNotificationClose = () => {
+		setNotificationAnchor(null);
+	};
+
+	const handleNotificationRead = async (notification: Notification) => {
+		await updateNotification({
+			variables: { input: { _id: notification._id, notificationStatus: NotificationStatus.READ } },
+		});
+		getNotificationsRefetch();
+		handleNotificationClose();
+
+		router.push(
+			notification.notificationGroup === 'ARTICLE'
+				? `/community/detail?articleCategory=FREE&id=${notification.articleId}`
+				: notification.notificationGroup === 'PROPERTY'
+				? `property/detail?id=${notification.propertyId}`
+				: notification.notificationGroup === 'MEMBER'
+				? `/dealer/detail?dealerId=${notification.receiverId}`
+				: '/',
+		); // Default route if none match
+	};
+
+	console.log('notifications: ', userNotifications);
+	const unreadNotifications = userNotifications.filter((notification) => notification.notificationStatus === 'WAIT');
 
 	const StyledMenu = styled((props: MenuProps) => (
 		<Menu
@@ -149,24 +237,24 @@ const Top = () => {
 					</Box>
 					<Box component={'div'} className={'router-box'}>
 						<Link href={'/'}>
-							<div>{('Home')}</div>
+							<div>{'Home'}</div>
 						</Link>
 						<Link href={'/property'} className="underline-link">
-							<div>{('Stays')}</div>
+							<div>{'Stays'}</div>
 						</Link>
 						<Link href={'/booking'} className="underline-link">
-							<div>{('Booking')}</div>
+							<div>{'Booking'}</div>
 						</Link>
 						<Link href={'/community?articleCategory=FREE'}>
-							<div> {('Community')} </div>
+							<div> {'Community'} </div>
 						</Link>
 						{user?._id && (
 							<Link href={'/mypage'}>
-								<div> {('My Page')} </div>
+								<div> {'My Page'} </div>
 							</Link>
 						)}
 						<Link href={'/cs'}>
-							<div> {('CS')} </div>
+							<div> {'CS'} </div>
 						</Link>
 					</Box>
 
@@ -202,13 +290,110 @@ const Top = () => {
 						) : (
 							<Link href={'/account/join'}>
 								<div className={'join-box'}>
-									<span>{('Login')}</span>
+									<span>{'Login'}</span>
 								</div>
 							</Link>
 						)}
 
 						<div className={'lan-box'}>
-							{user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />}
+							{user?._id && (
+								<>
+									<IconButton className={'icon-cala'} onClick={handleNotificationClick}>
+										<Badge badgeContent={unreadNotifications.length} color="error">
+											<NotificationsOutlinedIcon className={'notification-icon'} />
+										</Badge>
+									</IconButton>
+									<Menu
+										anchorEl={notificationAnchor}
+										open={notificationOpen}
+										onClose={handleNotificationClose}
+										PaperProps={{
+											elevation: 1,
+											sx: {
+												marginTop: '7px',
+												backgroundColor: '#ffffff93',
+												color: 'black',
+												minWidth: '300px',
+												width: '400px',
+												borderRadius: '12px',
+												maxHeight: '400px',
+												overflowY: 'auto',
+											},
+										}}
+										MenuListProps={{
+											sx: {
+												padding: 0,
+											},
+										}}
+									>
+										{unreadNotifications.length === 0 ? (
+											<MenuItem
+												sx={{
+													display: 'flex',
+													flexDirection: 'column',
+													alignItems: 'center',
+													justifyContent: 'center',
+													color: '#fff',
+													height: '100px',
+												}}
+											>
+												{t('No new alerts')}
+											</MenuItem>
+										) : (
+											unreadNotifications.map((notification: any) => (
+												<MenuItem
+													key={notification._id}
+													className={'notification-items'}
+													onClick={() => handleNotificationRead(notification)}
+													sx={{
+														display: 'flex',
+														flexDirection: 'column',
+														alignItems: 'flex-start',
+														backgroundColor:
+															notification.notificationStatus === NotificationStatus.WAIT ? '#fff' : '#fff',
+														'&:hover': {
+															backgroundColor:
+																notification.notificationStatus === NotificationStatus.WAIT ? '#f5f5e6' : '#ff000079',
+														},
+														borderRadius: '10px',
+														marginBottom: '7px',
+														padding: '15px 20px',
+														transition: 'background-color 0.3s ease',
+													}}
+												>
+													<div>
+														<Typography
+															variant="subtitle1"
+															sx={{
+																fontWeight: '700',
+																fontFamily: 'Nunito',
+																fontSize: '16px',
+																display: 'flex',
+																flexDirection: 'row',
+																alignItems: 'center',
+															}}
+														>
+															<NotificationsActiveIcon
+																sx={{ fontSize: '16px', marginRight: '3px', color: '#e50b0b' }}
+															/>{' '}
+															{notification.notificationTitle}
+														</Typography>
+														<Typography
+															variant="body2"
+															sx={{ margin: '0.5px 0', fontFamily: 'Nunito', fontSize: '15px' }}
+														>
+															{notification.notificationDesc}
+														</Typography>
+														<Typography variant="caption" sx={{ color: 'gray' }}>
+															{notification.createdAt}
+														</Typography>
+													</div>
+												</MenuItem>
+											))
+										)}
+									</Menu>
+								</>
+							)}
 							<Button
 								disableRipple
 								className="btn-lang"
