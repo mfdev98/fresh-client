@@ -29,15 +29,15 @@ const PropertyCard = (props: PropertyCardType) => {
 	const imagePath: string = property?.propertyImages[0]
 		? `${REACT_APP_API_URL}/${property?.propertyImages[0]}`
 		: '/img/media/header1.svg';
-	
+
 	useEffect(() => {
-				AOS.init({
-					duration: 3000, // Animation duration in milliseconds
-					offset: 100, // Offset (in px) from the viewport to trigger animations
-					once: false, // Whether animation should happen only once
-					easing: 'ease-in-out',
-				});
-			}, []);
+		AOS.init({
+			duration: 600, // Animation duration in milliseconds
+			offset: 100, // Offset (in px) from the viewport to trigger animations
+			once: false, // Whether animation should happen only once
+			easing: 'ease-in-out',
+		});
+	}, []);
 
 	return (
 		<Stack className="card-config" data-aos="zoom-in-up">

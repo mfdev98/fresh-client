@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const TrendCard = () => {
 	useEffect(() => {
 		AOS.init({
-			duration: 2000, // Animation duration in milliseconds
+			duration: 1000, // Animation duration in milliseconds
 			offset: 100, // Offset (in px) from the viewport to trigger animations
 			once: false, // Whether animation should happen only once
 		});

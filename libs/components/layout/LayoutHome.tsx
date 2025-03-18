@@ -12,6 +12,8 @@ import Chat from '../Chat';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 
 const withLayoutMain = (Component: any) => {
@@ -24,6 +26,14 @@ const withLayoutMain = (Component: any) => {
 			const jwt = getJwtToken();
 			if (jwt) updateUserInfo(jwt);
 		}, []);
+
+		useEffect(() => {
+				AOS.init({
+					duration: 1000, // Animation duration in milliseconds
+					offset: 100, // Offset (in px) from the viewport to trigger animations
+					once: false, // Whether animation should happen only once
+				});
+			}, []);
 
 		/** HANDLERS **/
 

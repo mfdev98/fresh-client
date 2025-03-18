@@ -42,7 +42,7 @@ const eventsData: EventData[] = [
 const Event = () => {
 	useEffect(() => {
 		AOS.init({
-			duration: 3000, // Animation duration in milliseconds
+			duration: 1000, // Animation duration in milliseconds
 			offset: 100, // Offset (in px) from the viewport to trigger animations
 			once: false, // Whether animation should happen only once
 		});

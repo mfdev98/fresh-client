@@ -20,8 +20,6 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { propertySquare } from '../../config';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-
-
 const MenuProps = {
 	PaperProps: {
 		style: {
@@ -44,8 +42,6 @@ const Filter = (props: FilterType) => {
 	const [propertyType, setPropertyType] = useState<PropertyType[]>(Object.values(PropertyType));
 	const [searchText, setSearchText] = useState<string>('');
 	const [showMore, setShowMore] = useState<boolean>(false);
-
-		
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -536,7 +532,7 @@ const Filter = (props: FilterType) => {
 			<Stack className={'filter-main'}>
 				<Stack className={'find-your-home'} mb={'40px'}>
 					<div className={'find-text'}>
-						<Typography className={'title-main'}>Find Your R Here</Typography>
+						<Typography className={'title-main'}>Find Your Room Here</Typography>
 					</div>
 					<Stack className={'input-box'}>
 						<OutlinedInput

@@ -22,7 +22,7 @@ const TopAgentCard = (props: TopAgentProps) => {
 
 	useEffect(() => {
 		AOS.init({
-			duration: 5000, // Animation duration in milliseconds
+			duration: 1000, // Animation duration in milliseconds
 			offset: 100, // Offset (in px) from the viewport to trigger animations
 			once: false, // Whether animation should happen only once
 			easing: 'ease-in-out',
