@@ -2,7 +2,7 @@ import React from 'react';
 
 const Logos = () => {
 	return (
-		<div className="h-[250px] w-full bg-white flex justify-center items-center flex ">
+		<div className="h-[250px] w-full min-w-[1300px] bg-white flex justify-center items-center flex ">
 			<div className="flex max-w-full flex-row items-center justify-center gap-34 md:gap-40">
 				<img
 					className="cursor-pointer transition-transform duration-300 hover:scale-110"

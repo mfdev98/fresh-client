@@ -17,7 +17,6 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const CS: NextPage = () => {
-	const device = useDeviceDetect();
 	const router = useRouter();
 
 	/** HANDLERS **/

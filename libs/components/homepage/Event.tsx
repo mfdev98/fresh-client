@@ -64,7 +64,7 @@ const Event = () => {
 	}, []);
 
 	return (
-		<div className="w-full h-[700px] mx-auto p-4 mb-10" data-aos={'zoom-in-up'}>
+		<div className="w-full min-w-[1300px] h-[700px] mx-auto p-4 mb-10" data-aos={'zoom-in-up'}>
 			<div className="space-y-5 w-full text-center">
 				<Typography variant="h1" className="mb-5 text-3xl font-semibold text-slate-900 md:text-5xl ">
 					Hot Events

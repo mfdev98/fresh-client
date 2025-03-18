@@ -12,9 +12,9 @@ const TrendCard = () => {
 		});
 	}, []);
 	return (
-		<section className="bg-white overflow-hidden ">
-			<div className="flex items-center justify-center">
-				<div className="text-center space-y-5">
+		<section className="bg-white overflow-hidden min-w-[1300px]">
+			<div className="flex items-center justify-center ">
+				<div className="text-center space-y-5 ">
 					<Typography variant="h1" className="mb-5 text-3xl font-semibold text-slate-900 md:text-5xl">
 						We Offer Best Services
 					</Typography>
@@ -24,7 +24,7 @@ const TrendCard = () => {
 
 			<div className="max-w-screen-xl 2xl:max-w-screen-3xl px-8 md:px-12 mx-auto py-12 lg:py-24 space-y-24 h-svh flex flex-col justify-center">
 				{/* Image Cards */}
-				<div className="flex flex-col sm:flex-row mx-auto mt-10" data-aos={'zoom-in-up'}>
+				<div className="flex flex-row sm:flex-row mx-auto mt-10" data-aos={'zoom-in-up'}>
 					{[
 						'https://images.unsplash.com/photo-1530035415911-95194de4ebcc?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 						'https://images.unsplash.com/photo-1487180144351-b8472da7d491?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
